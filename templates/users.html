@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+<table>
+  {% for user in users %}
+  <tr>
+    <td><img src="{{user.image_url}}" /></td>
+    <td>{{user.username}}</td>
+    <td>{{user.first-name}} {{<user.last_name}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

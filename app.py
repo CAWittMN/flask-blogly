@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import User, db, connect_db
 
@@ -23,8 +23,12 @@ def root():
 
 @app.route('/users')
 def show_users():
-    return render_template('users.htm')
+    users = User.query.all()
+    if len(users) == 0:
+        flash('No users')
+        return redirect('/')
+    return render_template('users.html', users=users)
 
-@app.route('/new-user')
+@app.route('/new-user' )
 def new_user():
     return render_template('new-user')
