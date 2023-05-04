@@ -59,13 +59,13 @@ def show_user(user_id):
     return render_template("user.html", user=user)
 
 
-@app.route("/users/edit/<int:user_id>", methods=["GET"])
+@app.route("/users/<int:user_id>/edit", methods=["GET"])
 def edit_user_form(user_id):
     user = User.query.get_or_404(user_id)
     return render_template("edit-user.html", user=user)
 
 
-@app.route("/users/edit/<int:user_id>", methods=["POST"])
+@app.route("/users//<int:user_id>/edit", methods=["POST"])
 def save_user_changes(user_id):
     user = User.query.get_or_404(user_id)
     user.user_name = request.form["user_name"]
@@ -77,3 +77,5 @@ def save_user_changes(user_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+@app.route('/users')
