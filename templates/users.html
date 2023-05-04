@@ -5,7 +5,9 @@ get_flashed_messages() %}
 <table>
   {% for user in users %}
   <tr>
-    <td><img src="{{user.image_url}}" /></td>
+    <td>
+      <a href="/users/{{ user.id }}"><img src="{{user.image_url}}" /></a>
+    </td>
     <td>{{user.user_name}}</td>
     <td>{{user.first_name}} {{user.last_name}}</td>
   </tr>

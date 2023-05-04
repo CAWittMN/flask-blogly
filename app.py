@@ -54,6 +54,6 @@ def add_user():
 
 
 @app.route("/users/<int:user_id>")
-def show_user():
+def show_user(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template("show-user.html", user=user)
+    return render_template("user.html", user=user)

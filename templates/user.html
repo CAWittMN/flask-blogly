@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<img src="{{ user.image_url }}" />
+<div>{{ user.user_name }}</div>
+<div>{{ user.first_name }}</div>
+<div>{{ user.last_name }}</div>
+<a href="/users/edit/{{ user.id }}"><button>EDIT</button></a>
+{% endblock %}
