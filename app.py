@@ -29,6 +29,20 @@ def show_users():
         return redirect('/')
     return render_template('users.html', users=users)
 
-@app.route('/new-user' )
+@app.route('/new-user', methods=['GET'])
 def new_user():
-    return render_template('new-user')
+    return render_template('new-user.html')
+
+@app.route('/new-user', methods=['POST'])
+def add_user():
+    new_user = User(
+        user_name=request.form['user_name'], 
+        first_name=request.form['first_name'], 
+        last_name=request.form['last_name'], 
+        image_url=request.form['image_url'] or None)
+    
+    db.session.add(new_user)
+    db.session.commit()
+
+    flash('User added!')
+    return redirect('/new-user')

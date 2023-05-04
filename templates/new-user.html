@@ -1,8 +1,23 @@
-{% extends base.html %} {% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="form-container" id="form-container">
-  <form class="new-user-form" id="new-user-form">
+  <form method="post" class="new-user-form" id="new-user-form">
+    <label for="image_url">Perofile pic url:</label>
+    <input type="text" name="image_url" placeholder="https://..." />
+    <label for="user_name">Username:</label>
+    <input required type="text" name="user_name" placeholder="Username..." />
     <label for="first_name">First name:</label>
-    <input type="text" id="first_name" name="first-name" />
+    <input
+      required
+      type="text"
+      id="first_name"
+      name="first_name"
+      placeholder="First name..."
+    />
+    <label for="last_name">Last name:</label>
+    <input required type="text" name="last_name" placeholder="Last name..." />
+    <button type="submit">Create</button>
   </form>
 </div>
-{% endblock %}
+{% for msg in get_flashed_messages() %}
+<div class="messages">{{ msg }}</div>
+{% endfor %} {% endblock %}
