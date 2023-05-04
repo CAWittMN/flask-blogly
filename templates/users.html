@@ -3,8 +3,8 @@
   {% for user in users %}
   <tr>
     <td><img src="{{user.image_url}}" /></td>
-    <td>{{user.username}}</td>
-    <td>{{user.first-name}} {{<user.last_name}}</td>
+    <td>{{user.user_name}}</td>
+    <td>{{user.first_name}} {{user.last_name}}</td>
   </tr>
   {% endfor %}
 </table>
