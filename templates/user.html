@@ -3,5 +3,10 @@
 <div>{{ user.user_name }}</div>
 <div>{{ user.first_name }}</div>
 <div>{{ user.last_name }}</div>
-<a href="/users/edit/{{ user.id }}"><button>EDIT</button></a>
+<form>
+  <button formaction="/users/{{ user.id }}/edit" formmethod="GET">EDIT</button>
+  <button formaction="/users/{{ user.id }}/delete" formmethod="POST">
+    DELETE
+  </button>
+</form>
 {% endblock %}

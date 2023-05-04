@@ -23,7 +23,7 @@ def root():
     return render_template("home.html")
 
 
-@app.route("/users")
+@app.route("/users", methods=["GET"])
 def show_users():
     users = User.query.all()
     if len(users) == 0:
@@ -75,7 +75,15 @@ def save_user_changes(user_id):
 
     db.session.add(user)
     db.session.commit()
-
+    flash("Profile updated!")
     return redirect(f"/users/{user_id}")
 
-@app.route('/users')
+
+@app.route("/users/<int:user_id>/delete", methods=["POST"])
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    db.session.delete(user)
+    db.session.commit()
+    flash("Profile deleted!")
+    return redirect("/users")
