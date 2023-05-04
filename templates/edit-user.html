@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+<form method="post" class="new-user-form" id="new-user-form">
+  <label for="image_url">Perofile pic url:</label>
+  <input
+    type="text"
+    name="image_url"
+    placeholder="https://..."
+    value="{{ user.image_url }}"
+  />
+  <label for="user_name">Username:</label>
+  <input
+    required
+    type="text"
+    name="user_name"
+    placeholder="Username..."
+    value="{{ user.user_name }}"
+  />
+  <label for="first_name">First name:</label>
+  <input
+    required
+    type="text"
+    id="first_name"
+    name="first_name"
+    placeholder="First name..."
+    value="{{ user.first_name }}"
+  />
+  <label for="last_name">Last name:</label>
+  <input
+    required
+    type="text"
+    name="last_name"
+    placeholder="Last name..."
+    value="{{ user.last_name }}"
+  />
+  <button type="submit">Save Changes</button>
+</form>
+{% endblock %}

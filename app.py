@@ -57,3 +57,23 @@ def add_user():
 def show_user(user_id):
     user = User.query.get_or_404(user_id)
     return render_template("user.html", user=user)
+
+
+@app.route("/users/edit/<int:user_id>", methods=["GET"])
+def edit_user_form(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template("edit-user.html", user=user)
+
+
+@app.route("/users/edit/<int:user_id>", methods=["POST"])
+def save_user_changes(user_id):
+    user = User.query.get_or_404(user_id)
+    user.user_name = request.form["user_name"]
+    user.first_name = request.form["first_name"]
+    user.last_name = request.form["last_name"]
+    user.image_url = request.form["image_url"]
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
