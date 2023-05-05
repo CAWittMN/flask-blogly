@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 def connect_db(app):
     """Connect to database."""
     db.app = app
@@ -16,6 +17,10 @@ class User(db.Model):
     """User model"""
 
     __tablename__ = "users"
+
+    def __repr__(self):
+        user = self
+        return f"User id={user.id} user_name={user.user_name} first_name={user.first_name} last_name={user.last_name}"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.Text, nullable=False, unique=True)
