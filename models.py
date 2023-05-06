@@ -35,12 +35,16 @@ class User(db.Model):
 
     @classmethod
     def get_full_name(cls, user):
+        """Return a string built from user data"""
+
         if user.middle_name == None:
             return f"""{user.first_name} {user.last_name}"""
         return f"{user.first_name} {user.middle_name} {user.last_name}"
 
     @classmethod
     def full_name_dict(cls, name):
+        """create a name dictionary from a string name"""
+
         split_name = name.split()
 
         if len(split_name) == 1:
@@ -60,6 +64,8 @@ class User(db.Model):
 
     @classmethod
     def check_image_url(cls, url, method):
+        """check if image url is the default url and retrun appropriate based on method"""
+
         if url == None and method == ["POST"]:
             return DEFAULT_IMAGE_URL
         elif url == DEFAULT_IMAGE_URL and method == ["GET"]:
