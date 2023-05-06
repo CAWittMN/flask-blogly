@@ -2,7 +2,7 @@
 
 from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import User, db, connect_db
+from models import User, Upload, db, connect_db
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly"
@@ -52,6 +52,8 @@ def add_user():
     """handle adding new user to database"""
 
     name = User.full_name_dict(request.form["name"].title())
+    file = request.files["file"]
+    upload = Upl
 
     if name == "Too many names":
         flash(
@@ -97,6 +99,7 @@ def edit_user_form(user_id):
 
     if image_url == None:
         return render_template("edit-user.html", full_name=full_name)
+
     return render_template("edit-user.html", full_name=full_name, image_url=image_url)
 
 
@@ -114,6 +117,7 @@ def save_user_changes(user_id):
             Please hyphenate multiple last or middle names."""
         )
         return redirect(f"/users/{user_id}/edit")
+
     elif name == "Only one name":
         flash("Please include your last name.")
         return redirect(f"/users/{user_id}/edit")
@@ -131,9 +135,12 @@ def save_user_changes(user_id):
 
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
 def delete_user(user_id):
+    """handle deleting user from database"""
+
     user = User.query.get_or_404(user_id)
 
     db.session.delete(user)
     db.session.commit()
+
     flash("Profile deleted!")
     return redirect("/users")
