@@ -21,26 +21,36 @@ with app.app_context():
 
 
 @app.route("/")
-def root():
+def home_page():
+    """show home page"""
+
     return render_template("home.html")
 
 
 @app.route("/users", methods=["GET"])
 def show_users():
+    """show all users"""
+
     users = User.query.all()
+
     if len(users) == 0:
         flash("No users")
         return redirect("/")
+
     return render_template("users.html", users=users)
 
 
 @app.route("/new-user", methods=["GET"])
 def new_user():
+    """show new user form"""
+
     return render_template("new-user.html")
 
 
 @app.route("/new-user", methods=["POST"])
 def add_user():
+    """handle adding new user to database"""
+
     name = User.full_name_dict(request.form["name"].title())
 
     if name == "Too many names":
@@ -70,6 +80,8 @@ def add_user():
 
 @app.route("/users/<int:user_id>")
 def show_user(user_id):
+    """show specific user"""
+
     user = User.query.get_or_404(user_id)
     full_name = User.get_full_name(user)
     return render_template("user.html", user=user, full_name=full_name)
@@ -77,9 +89,12 @@ def show_user(user_id):
 
 @app.route("/users/<int:user_id>/edit", methods=["GET"])
 def edit_user_form(user_id):
+    """show edit user form"""
+
     user = User.query.get_or_404(user_id)
     full_name = User.get_full_name(user)
     image_url = User.check_image_url(user.image_url, ["GET"])
+
     if image_url == None:
         return render_template("edit-user.html", full_name=full_name)
     return render_template("edit-user.html", full_name=full_name, image_url=image_url)
@@ -87,16 +102,18 @@ def edit_user_form(user_id):
 
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
 def save_user_changes(user_id):
+    """handle updating user in database"""
+
     name = User.full_name_dict(request.form["name"].title())
     user = User.query.get_or_404(user_id)
     image_url = User.check_image_url(request.form["image_url"] or None, ["POST"])
 
     if name == "Too many names":
         flash(
-            "First, middle, and last name only. Please hyphenate multiple last or middle names."
+            """First, middle, and last name only. 
+            Please hyphenate multiple last or middle names."""
         )
         return redirect(f"/users/{user_id}/edit")
-
     elif name == "Only one name":
         flash("Please include your last name.")
         return redirect(f"/users/{user_id}/edit")
