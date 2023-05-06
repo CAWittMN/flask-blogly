@@ -1,12 +1,20 @@
-{% extends 'base.html' %} {% block content %}
-<img src="{{ user.image_url }}" />
-<div>{{ user.user_name }}</div>
-<div>{{ user.first_name }}</div>
-<div>{{ user.last_name }}</div>
-<form>
-  <button formaction="/users/{{ user.id }}/edit" formmethod="GET">EDIT</button>
-  <button formaction="/users/{{ user.id }}/delete" formmethod="POST">
-    DELETE
-  </button>
-</form>
+{% extends 'base.html' %} {% block content %} {% for msg in
+get_flashed_messages() %}
+<div>{{ msg }}</div>
+{% endfor %}
+<div>
+  <img src="{{ user.image_url }}" />
+  <div>
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    <form>
+      <button formaction="/users/{{ user.id }}/edit" formmethod="GET">
+        EDIT
+      </button>
+      <button formaction="/users/{{ user.id }}/delete" formmethod="POST">
+        DELETE
+      </button>
+    </form>
+    <div>{{ user.user_name }}</div>
+  </div>
+</div>
 {% endblock %}

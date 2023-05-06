@@ -50,7 +50,7 @@ def add_user():
     db.session.commit()
 
     flash("User added!")
-    return redirect("/new-user")
+    return redirect("/users")
 
 
 @app.route("/users/<int:user_id>")

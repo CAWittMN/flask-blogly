@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+<h1>Add a user</h1>
 <div class="form-container" id="form-container">
   <form method="post" class="new-user-form" id="new-user-form">
     <label for="image_url">Perofile pic url:</label>
@@ -15,7 +16,7 @@
     />
     <label for="last_name">Last name:</label>
     <input required type="text" name="last_name" placeholder="Last name..." />
-    <button type="submit">Create</button>
+    <button type="submit">Add</button>
   </form>
 </div>
 {% for msg in get_flashed_messages() %}

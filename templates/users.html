@@ -2,15 +2,18 @@
 get_flashed_messages() %}
 <div>{{ msg }}</div>
 {% endfor %}
-<table>
-  {% for user in users %}
-  <tr>
-    <td>
-      <a href="/users/{{ user.id }}"><img src="{{user.image_url}}" /></a>
-    </td>
-    <td>{{user.user_name}}</td>
-    <td>{{user.first_name}} {{user.last_name}}</td>
-  </tr>
-  {% endfor %}
-</table>
+<div
+  class="container-fluid position-absolute top-50 start-50 translate-middle bg-light"
+>
+  <h1>Users</h1>
+  <ul>
+    {% for user in users %}
+    <li>
+      <a href="/users/{{ user.id }}"
+        >{{ user.first_name }} {{ user.last_name }}</a
+      >
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
