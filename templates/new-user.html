@@ -3,19 +3,29 @@
 <div class="form-container" id="form-container">
   <form method="post" class="new-user-form" id="new-user-form">
     <label for="image_url">Perofile pic url:</label>
-    <input type="text" name="image_url" placeholder="https://..." />
+    <input
+      type="text"
+      name="image_url"
+      placeholder="https://..."
+      value="{{ err_image_url }}"
+    />
     <label for="user_name">Username:</label>
-    <input required type="text" name="user_name" placeholder="Username..." />
-    <label for="first_name">First name:</label>
     <input
       required
       type="text"
-      id="first_name"
-      name="first_name"
-      placeholder="First name..."
+      name="user_name"
+      placeholder="Username..."
+      value="{{ err_user_name }}"
     />
-    <label for="last_name">Last name:</label>
-    <input required type="text" name="last_name" placeholder="Last name..." />
+    <label for="name">Name</label>
+    <input
+      required
+      type="text"
+      id="name"
+      name="name"
+      placeholder="First and last name..."
+      value="{{ err_full_name }}"
+    />
     <button type="submit">Add</button>
   </form>
 </div>

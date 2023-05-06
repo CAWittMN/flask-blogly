@@ -5,33 +5,19 @@
     type="text"
     name="image_url"
     placeholder="https://..."
-    value="{{ user.image_url }}"
+    value="{{ image_url }}"
   />
-  <label for="user_name">Username:</label>
+  <label for="name">First name:</label>
   <input
     required
     type="text"
-    name="user_name"
-    placeholder="Username..."
-    value="{{ user.user_name }}"
-  />
-  <label for="first_name">First name:</label>
-  <input
-    required
-    type="text"
-    id="first_name"
-    name="first_name"
-    placeholder="First name..."
-    value="{{ user.first_name }}"
-  />
-  <label for="last_name">Last name:</label>
-  <input
-    required
-    type="text"
-    name="last_name"
-    placeholder="Last name..."
-    value="{{ user.last_name }}"
+    id="name"
+    name="name"
+    placeholder="Full name..."
+    value="{{ full_name }}"
   />
   <button type="submit">Save Changes</button>
 </form>
-{% endblock %}
+{% for msg in get_flashed_messages() %}
+<div class="messages">{{ msg }}</div>
+{% endfor %} {% endblock %}

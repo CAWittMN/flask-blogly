@@ -20,10 +20,48 @@ class User(db.Model):
 
     def __repr__(self):
         user = self
-        return f"User id={user.id} user_name={user.user_name} first_name={user.first_name} last_name={user.last_name}"
+        return f"""User id={user.id} 
+        user_name={user.user_name} 
+        first_name={user.first_name}
+        middle_name={user.middle_name} 
+        last_name={user.last_name}"""
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.Text, nullable=False, unique=True)
     first_name = db.Column(db.Text, nullable=False)
+    middle_name = db.Column(db.Text)
     last_name = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.Text, nullable=False, default=DEFAULT_IMAGE_URL)
+
+    @classmethod
+    def get_full_name(cls, user):
+        if user.middle_name == None:
+            return f"""{user.first_name} {user.last_name}"""
+        return f"{user.first_name} {user.middle_name} {user.last_name}"
+
+    @classmethod
+    def full_name_dict(cls, name):
+        split_name = name.split()
+
+        if len(split_name) == 1:
+            result = "Only one name"
+            return result
+        elif len(split_name) > 3:
+            result = "Too many names"
+            return result
+        elif len(split_name) == 2:
+            split_name.insert(1, None)
+
+        name_dict = dict(
+            first_name=split_name[0], middle_name=split_name[1], last_name=split_name[2]
+        )
+
+        return name_dict
+
+    @classmethod
+    def check_image_url(cls, url, method):
+        if url == None and method == ["POST"]:
+            return DEFAULT_IMAGE_URL
+        elif url == DEFAULT_IMAGE_URL and method == ["GET"]:
+            return None
+        return url
