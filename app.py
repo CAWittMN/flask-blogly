@@ -9,6 +9,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = "bloglysecretkey"
+app.config["SQLALCHEMY_RECORD_QUERIES"] = True
+app.debug = True
 
 debug = DebugToolbarExtension(app)
 
