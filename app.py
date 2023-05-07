@@ -2,7 +2,7 @@
 
 from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import User, Upload, db, connect_db
+from models import User, db, connect_db
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly"
@@ -52,8 +52,6 @@ def add_user():
     """handle adding new user to database"""
 
     name = User.full_name_dict(request.form["name"].title())
-    file = request.files["file"]
-    upload = Upl
 
     if name == "Too many names":
         flash(

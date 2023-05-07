@@ -71,14 +71,3 @@ class User(db.Model):
         elif url == DEFAULT_IMAGE_URL and method == ["GET"]:
             return None
         return url
-
-    class Upload(db.Model):
-        """image upload model"""
-
-        def __repr__(self):
-            upload = self
-            return f"""Upload id={self.id}, upload name={self.file_name}"""
-
-        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        file_name = db.Column(db.Text(50))
-        data = db.Column(db.LargeBinary)
