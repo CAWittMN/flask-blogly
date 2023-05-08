@@ -71,3 +71,13 @@ class User(db.Model):
         elif url == DEFAULT_IMAGE_URL and method == ["GET"]:
             return None
         return url
+
+
+class Upload(db.Model):
+    """image upload model"""
+
+    __tablename__ = "uploads"
+
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.Text)
+    data = db.Column(db.LargeBinary)
