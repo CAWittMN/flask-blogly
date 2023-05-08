@@ -4,20 +4,32 @@ get_flashed_messages() %}
 {% endfor %}
 <div
   class="container-sm position-absolute translate-middle bottom- 50 top-50 start-50"
-  style="height: 200px; width: 500px"
+  style="height: 200px; width: 700px"
 >
-  <img src="{{ user.image_url }}" />
-  <div>
-    <h1>{{ full_name }}</h1>
-    <div>{{ user.user_name }}</div>
-    <form>
-      <button formaction="/users/{{ user.id }}/edit" formmethod="GET">
-        EDIT
-      </button>
-      <button formaction="/users/{{ user.id }}/delete" formmethod="POST">
-        DELETE
-      </button>
-    </form>
+  <div class="row">
+    <div class="col-sm">
+      <img class="img-fluid img-thumbnail rounded" src="{{ user.image_url }}" />
+    </div>
+    <div class="col-lg">
+      <h1>{{ full_name }}</h1>
+      <div>{{ user.user_name }}</div>
+      <form>
+        <button
+          class="btn btn-warning"
+          formaction="/users/{{ user.id }}/edit"
+          formmethod="GET"
+        >
+          EDIT
+        </button>
+        <button
+          class="btn btn-danger"
+          formaction="/users/{{ user.id }}/delete"
+          formmethod="POST"
+        >
+          DELETE
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}
