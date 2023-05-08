@@ -78,6 +78,10 @@ class Upload(db.Model):
 
     __tablename__ = "uploads"
 
-    id = db.Column(db.Integer, primary_key=True)
+    def __repr__(self):
+        upload = self
+        return f"""Upload id={self.id}, upload name={self.filename}"""
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     filename = db.Column(db.Text)
     data = db.Column(db.LargeBinary)
