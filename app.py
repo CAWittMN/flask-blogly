@@ -105,8 +105,8 @@ def edit_user_form(user_id):
 def save_user_changes(user_id):
     """handle updating user in database"""
 
-    name = User.full_name_dict(request.form["name"].title())
     user = User.query.get_or_404(user_id)
+    name = User.full_name_dict(request.form["name"].title())
     image_url = User.check_image_url(request.form["image_url"] or None, ["POST"])
 
     if name == "Too many names":
