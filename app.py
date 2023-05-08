@@ -142,3 +142,12 @@ def delete_user(user_id):
 
     flash("Profile deleted!")
     return redirect("/users")
+
+
+@app.route("/users/<int:user_id>/posts/new")
+def new_post(user_id):
+    """show new post form"""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('new-post.html', user=user)

@@ -1,13 +1,8 @@
 """Models for Blogly."""
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-
-
-def connect_db(app):
-    """Connect to database."""
-    db.app = app
-    db.init_app(app)
 
 
 DEFAULT_IMAGE_URL = "https://www.freeiconspng.com/uploads/user-login-icon-14.png"
@@ -33,6 +28,8 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.Text, nullable=False, default=DEFAULT_IMAGE_URL)
 
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+
     @classmethod
     def get_full_name(cls, user):
         """Return a string built from user data"""
@@ -43,7 +40,7 @@ class User(db.Model):
 
     @classmethod
     def full_name_dict(cls, name):
-        """create a name dictionary from a string name"""
+        """create a name dictionary from a string name or return a result"""
 
         split_name = name.split()
 
@@ -64,10 +61,35 @@ class User(db.Model):
 
     @classmethod
     def check_image_url(cls, url, method):
-        """check if image url is the default url and retrun appropriate based on method"""
+        """check if image url is the default url and retrun appropriate response based on method"""
 
         if url == None and method == ["POST"]:
             return DEFAULT_IMAGE_URL
         elif url == DEFAULT_IMAGE_URL and method == ["GET"]:
             return None
         return url
+
+
+class Post(db.Model):
+    """Post model"""
+
+    __tablename__ = "posts"
+
+    def __repr__(self):
+        post = self
+        return f"""post id = {post.id}
+        content = {post.content}"""
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    title = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_datetime = db.Column(
+        db.DateTime, nullable=False, default=datetime.datetime.now
+    )
+
+
+def connect_db(app):
+    """Connect to database."""
+    db.app = app
+    db.init_app(app)

@@ -29,6 +29,26 @@ get_flashed_messages() %}
           DELETE
         </button>
       </form>
+      <div>
+        <div>Posts</div>
+        <ul>
+          {% for post in user.posts %}
+          <li>
+            <a href="/users/posts/{{ post.id }}">{{ user.post.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <form>
+          <button
+            formaction="/users/{{ user.id }}/posts/new"
+            class="btn btn-sm btn-primary"
+          >
+            Add a Post
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
