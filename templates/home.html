@@ -2,5 +2,26 @@
 get_flashed_messages() %}
 <div>{{ msg }}</div>
 {% endfor %}
-<h1 class="text-center display-1">blogly.</h1>
+<h1 class="display-1 text-center">blogly.</h1>
+<div class="container-sm">
+  <div class="row">Recent posts</div>
+  {% for post in posts %}
+  <div class="row">
+    <div class="col">
+      <a href="/users/{{ post.user_id }}/posts/{{ post.id }}"
+        >{{ post.title }}</a
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Posted by
+      <a href="/users/{{ post.user_id }}"
+        >{{ post.user.first_name }} {{ post.user.last_name }}</a
+      >
+    </div>
+    <div class="col">{{ post.friendly_date }}</div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

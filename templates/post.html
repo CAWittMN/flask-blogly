@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container-sm">
+  <div class="row">
+    <div class="col-sm-1">
+      <img src="{{ post.user.image_url }}" class="img-thumbnail" />
+    </div>
+    <div class="col">
+      <div class="row">
+        <a href="/users/{{ post.user_id }}"
+          >{{ post.user.first_name }} {{ post.user.last_name }}</a
+        >
+      </div>
+      <div class="row"><span>{{ post.friendly_date }}</span></div>
+    </div>
+  </div>
+  <div class="row"><h1>{{ post.title }}</h1></div>
+  <div class="row">{{ post.content }}</div>
+  <div class="row">
+    <div class="col">
+      <form>
+        <button
+          formaction="/users/{{ post.user_id }}/posts/{{ post.id }}/edit"
+          formmethod="GET"
+        >
+          Edit</button
+        ><button
+          formaction="/users/{{ post.user_id }}/posts/{{ post.id }}/delete"
+          formmethod="POST"
+        >
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

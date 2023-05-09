@@ -1,3 +1,9 @@
 {% extends 'base.html' %} {% block content %}
-<form method="post"></form>
+<div class="form-container">
+  <form method="post">
+    <input type="text" name="title" placeholder="Title..." />
+    <input type="text" name="content" placeholder="Write a post..." />
+    <button type="submit" class="btn btn-lg btn-primary">Post</button>
+  </form>
+</div>
 {% endblock %}

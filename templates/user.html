@@ -31,13 +31,16 @@ get_flashed_messages() %}
       </form>
       <div>
         <div>Posts</div>
-        <ul>
-          {% for post in user.posts %}
-          <li>
-            <a href="/users/posts/{{ post.id }}">{{ user.post.title }}</a>
-          </li>
-          {% endfor %}
-        </ul>
+        {% if not user.posts %}
+        <div>No posts!</div>
+        {% endif %} {% if user.posts %} {% for post in user.posts %}
+        <div>
+          <a href="/users/{{ user.id }}/posts/{{ post.id }}"
+            >{{ post.title }}</a
+          >
+          <div>{{ post.created_datetime }}</div>
+        </div>
+        {% endfor %} {% endif %}
       </div>
       <div>
         <form>

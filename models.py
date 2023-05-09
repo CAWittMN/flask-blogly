@@ -88,6 +88,12 @@ class Post(db.Model):
         db.DateTime, nullable=False, default=datetime.datetime.now
     )
 
+    @property
+    def friendly_date(self):
+        """Return nicely-formatted date."""
+
+        return self.created_datetime.strftime("%m/%d/%Y, %H:%M")
+
 
 def connect_db(app):
     """Connect to database."""
