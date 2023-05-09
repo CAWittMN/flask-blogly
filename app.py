@@ -102,7 +102,9 @@ def edit_user_form(user_id):
     if image_url == None:
         return render_template("edit-user.html", full_name=full_name)
 
-    return render_template("edit-user.html", full_name=full_name, image_url=image_url)
+    return render_template(
+        "edit-user.html", full_name=full_name, image_url=image_url, user_id=user_id
+    )
 
 
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
@@ -194,17 +196,15 @@ def edit_post(user_id, post_id):
 
 @app.route("/users/<int:user_id>/posts/<int:post_id>/edit", methods=["POST"])
 def save_post_changes(user_id, post_id):
+    """handle saving changes to post"""
+
     post = Post.query.get_or_404(post_id)
 
-    print(request.form["title"])
-    print(request.form["content"])
     post.title = request.form["title"]
     post.content = request.form["content"]
 
-    print(post)
-
     db.session.add(post)
-    db.session.commit
+    db.session.commit()
 
     flash("Post updated!")
     return redirect(f"/users/{user_id}/posts/{post_id}")
@@ -213,10 +213,11 @@ def save_post_changes(user_id, post_id):
 @app.route("/users/<int:user_id>/posts/<int:post_id>/delete", methods=["POST"])
 def delete_post(user_id, post_id):
     """handle post delete"""
+
     post = Post.query.get_or_404(post_id)
 
     db.session.delete(post)
-    db.session.commit
+    db.session.commit()
 
     flash("Post deleted!")
     return redirect(f"/users/{user_id}")
