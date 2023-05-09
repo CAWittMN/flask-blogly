@@ -1,7 +1,14 @@
-{% extends 'base.html' %} {% block content %} {% for msg in
+{% extends 'base.html' %} {% block messages %} {% for msg in
 get_flashed_messages() %}
-<div>{{ msg }}</div>
-{% endfor %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ msg }}<button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endblock %} {% block content %}
 <div
   class="container-sm position-absolute translate-middle bottom- 50 top-50 start-50"
   style="height: 200px; width: 700px"
@@ -11,18 +18,18 @@ get_flashed_messages() %}
       <img class="img-fluid img-thumbnail rounded" src="{{ user.image_url }}" />
     </div>
     <div class="col-lg">
-      <h1>{{ full_name }}</h1>
+      <h1>{{ user.get_full_name }}</h1>
       <div>{{ user.user_name }}</div>
       <form>
         <button
-          class="btn btn-warning"
+          class="btn btn-sm btn-warning"
           formaction="/users/{{ user.id }}/edit"
           formmethod="GET"
         >
           EDIT
         </button>
         <button
-          class="btn btn-danger"
+          class="btn btn-sm btn-danger"
           formaction="/users/{{ user.id }}/delete"
           formmethod="POST"
         >

@@ -1,20 +1,43 @@
-{% extends 'base.html' %} {% block content %} {% for msg in
+{% extends 'base.html' %} {% block messages %} {% for msg in
 get_flashed_messages() %}
-<div>{{ msg }}</div>
-{% endfor %}
-<div
-  class="container-sm position-absolute translate-middle top-50 start-50 bg-light"
-  style="width: 200px"
->
-  <h1>Users</h1>
-  <ul>
-    {% for user in users %}
-    <li>
-      <a href="/users/{{ user.id }}"
-        >{{ user.first_name }} {{ user.last_name }}</a
-      >
-    </li>
-    {% endfor %}
-  </ul>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ msg }}<button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endblock %} {% block content %}
+<div class="container text-bg-light" style="width: 500px">
+  <div class="row">
+    <div class="col"><h1 class="display-6">Users</h1></div>
+  </div>
+  {% for user in users %}
+  <hr />
+  <div class="row">
+    <div class="col-sm-2 align-self-center">
+      <img src="{{ user.image_url }}" class="img-thumbnail" />
+    </div>
+    <div class="col">
+      <div class="row">
+        <a href="/users/{{ user.id }}">{{ user.get_name }}</a>
+      </div>
+      <div class="row">
+        <form>
+          <button
+            type="submit"
+            formaction="/users/{{ user.id }}/posts"
+            class="btn btn-sm btn-success"
+          >
+            Posts
+            <span class="badge text-bg-light">{{ user.posts|length }}</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <hr />
 </div>
 {% endblock %}

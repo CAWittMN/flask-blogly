@@ -1,35 +1,54 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container-sm">
-  <div class="row">
-    <div class="col-sm-1">
-      <img src="{{ post.user.image_url }}" class="img-thumbnail" />
-    </div>
-    <div class="col">
+{% extends 'base.html' %} {% block messages %} {% for msg in
+get_flashed_messages() %}
+<div class="container"></div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ msg }}<button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endblock %} {% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <div class="container-sm">
       <div class="row">
-        <a href="/users/{{ post.user_id }}"
-          >{{ post.user.first_name }} {{ post.user.last_name }}</a
-        >
+        <div class="col-sm-1">
+          <img src="{{ post.user.image_url }}" class="img-thumbnail" />
+        </div>
+        <div class="col">
+          <div class="row">
+            <a href="/users/{{ post.user_id }}">{{ post.user.get_name }}</a>
+          </div>
+          <div class="row"><span>{{ post.friendly_date }}</span></div>
+        </div>
       </div>
-      <div class="row"><span>{{ post.friendly_date }}</span></div>
     </div>
   </div>
-  <div class="row"><h1>{{ post.title }}</h1></div>
-  <div class="row">{{ post.content }}</div>
-  <div class="row">
-    <div class="col">
-      <form>
-        <button
-          formaction="/users/{{ post.user_id }}/posts/{{ post.id }}/edit"
-          formmethod="GET"
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.content }}</p>
+    <div class="row">
+      <div class="col-sm-1">
+        <a
+          href="/users/{{ post.user.id }}/posts/{{ post.id }}/edit"
+          class="btn btn-sm btn-warning"
+          >Edit</a
         >
-          Edit</button
-        ><button
-          formaction="/users/{{ post.user_id }}/posts/{{ post.id }}/delete"
-          formmethod="POST"
-        >
-          Delete
-        </button>
-      </form>
+      </div>
+      <div class="col-sm-1">
+        <form>
+          <button
+            formmethod="POST"
+            formaction="/users/{{ post.user.id }}/posts/{{ post.id }}/delete"
+            class="btn btn-danger btn-sm"
+          >
+            Delete
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -7,17 +7,19 @@
     placeholder="https://..."
     value="{{ image_url }}"
   />
-  <label for="name">First name:</label>
+  <label for="name">Name:</label>
   <input
     required
     type="text"
     id="name"
     name="name"
-    placeholder="Full name..."
-    value="{{ full_name }}"
+    placeholder="Name..."
+    value="{{ user.get_full_name }}"
   />
-  <button type="submit">Save Changes</button>
+  <a class="btn btn-sm btn-secondary" href="/users/{{ user.id }}"> Cancel </a>
+  <button class="btn btn-sm btn-primary" type="submit">Save Changes</button>
 </form>
+<form></form>
 {% for msg in get_flashed_messages() %}
 <div class="messages">{{ msg }}</div>
 {% endfor %} {% endblock %}
