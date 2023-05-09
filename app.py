@@ -217,3 +217,14 @@ def delete_post(user_id, post_id):
 
     flash(f"'{post.title}' post deleted!")
     return redirect(f"/users/{user_id}")
+
+
+@app.route("/users/<int:user_id>/posts")
+def show_user_posts(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if len(user.posts) == 0:
+        flash("No posts to show!")
+        return redirect("/users")
+
+    return render_template("posts.html", user=user)
