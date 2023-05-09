@@ -78,7 +78,7 @@ def add_user():
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User added!")
+    flash(f"User {new_user.get_name} added!")
     return redirect("/users")
 
 
@@ -87,8 +87,7 @@ def show_user(user_id):
     """show specific user"""
 
     user = User.query.get_or_404(user_id)
-    full_name = User.get_full_name(user)
-    return render_template("user.html", user=user, full_name=full_name)
+    return render_template("user.html", user=user)
 
 
 @app.route("/users/<int:user_id>/edit", methods=["GET"])
@@ -96,15 +95,12 @@ def edit_user_form(user_id):
     """show edit user form"""
 
     user = User.query.get_or_404(user_id)
-    full_name = User.get_full_name(user)
     image_url = User.check_image_url(user.image_url, ["GET"])
 
     if image_url == None:
-        return render_template("edit-user.html", full_name=full_name)
+        return render_template("edit-user.html", user=user)
 
-    return render_template(
-        "edit-user.html", full_name=full_name, image_url=image_url, user_id=user_id
-    )
+    return render_template("edit-user.html", image_url=image_url, user=user)
 
 
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
@@ -133,7 +129,7 @@ def save_user_changes(user_id):
 
     db.session.add(user)
     db.session.commit()
-    flash("Profile updated!")
+    flash(f"{user.get_name}'s profile updated!")
     return redirect(f"/users/{user_id}")
 
 
@@ -146,7 +142,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
 
-    flash("Profile deleted!")
+    flash(f"{user.get_name} deleted!")
     return redirect("/users")
 
 
@@ -157,7 +153,7 @@ def delete_user(user_id):
 def new_post(user_id):
     """show new post form"""
 
-    return render_template("new-post.html")
+    return render_template("new-post.html", user_id=user_id)
 
 
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
@@ -173,7 +169,7 @@ def save_new_post(user_id):
     db.session.add(new_post)
     db.session.commit()
 
-    flash("Post added!")
+    flash(f"{user.get_name}'s post '{new_post.title}' added!")
     return redirect(f"/users/{user_id}/posts/{new_post.id}")
 
 
@@ -206,7 +202,7 @@ def save_post_changes(user_id, post_id):
     db.session.add(post)
     db.session.commit()
 
-    flash("Post updated!")
+    flash(f"'{post.title}' post updated!")
     return redirect(f"/users/{user_id}/posts/{post_id}")
 
 
@@ -219,5 +215,5 @@ def delete_post(user_id, post_id):
     db.session.delete(post)
     db.session.commit()
 
-    flash("Post deleted!")
+    flash(f"'{post.title}' post deleted!")
     return redirect(f"/users/{user_id}")

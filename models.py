@@ -30,13 +30,17 @@ class User(db.Model):
 
     posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
 
-    @classmethod
-    def get_full_name(cls, user):
+    @property
+    def get_full_name(self):
         """Return a string built from user data"""
 
-        if user.middle_name == None:
-            return f"""{user.first_name} {user.last_name}"""
-        return f"{user.first_name} {user.middle_name} {user.last_name}"
+        if self.middle_name == None:
+            return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.middle_name} {self.last_name}"
+
+    @property
+    def get_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     @classmethod
     def full_name_dict(cls, name):
