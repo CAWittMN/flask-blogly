@@ -38,7 +38,7 @@ def show_users():
     users = User.query.all()
 
     if len(users) == 0:
-        flash("No users")
+        flash("No users to show!")
         return redirect("/")
 
     return render_template("users.html", users=users)
