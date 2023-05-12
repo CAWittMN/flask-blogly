@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, request, redirect, render_template, flash
+from flask import Flask, request, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import User, Post, Tag, db, connect_db
 
@@ -48,38 +48,64 @@ def show_users():
 def new_user():
     """show new user form"""
 
+    if session.get("error") == True:
+        user_name = session.get("user_name")
+        name = session.get("name")
+        image_url = session.get("image_url")
+        session["error"] = False
+        if image_url == None:
+            return render_template("new-user.html", user_name=user_name, name=name)
+        return render_template(
+            "new-user.html", user_name=user_name, name=name, image_url=image_url
+        )
+
     return render_template("new-user.html")
 
 
 @app.route("/new-user", methods=["POST"])
 def add_user():
     """handle adding new user to database"""
+    session.clear()
 
-    name = User.full_name_dict(request.form["name"].title())
+    user_name = request.form["user_name"]
+    image_url = request.form["image_url"] or None
+    form_name = request.form["name"].title()
+    name = User.full_name_dict(form_name)
+
+    session["user_name"] = user_name
+    session["name"] = form_name
+    session["image_url"] = image_url
 
     if name == "Too many names":
+        session["error"] = True
         flash(
             "First, middle, and last name only. Please hyphenate multiple last or middle names."
         )
         return redirect("/new-user")
 
     elif name == "Only one name":
+        session["error"] = True
         flash("Please include your last name.")
         return redirect("/new-user")
 
     new_user = User(
-        user_name=request.form["user_name"],
+        user_name=user_name,
         first_name=name["first_name"],
         middle_name=name["middle_name"],
         last_name=name["last_name"],
-        image_url=request.form["image_url"] or None,
+        image_url=image_url,
     )
 
-    db.session.add(new_user)
-    db.session.commit()
-
-    flash(f"User {new_user.get_name} added!")
-    return redirect("/users")
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except:
+        session["error"] = True
+        flash("Username already in use!")
+        return redirect("/new-user")
+    else:
+        flash(f"User {new_user.get_name} added!")
+        return redirect("/users")
 
 
 @app.route("/users/<int:user_id>")
