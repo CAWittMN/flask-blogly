@@ -9,54 +9,74 @@ get_flashed_messages() %}
   ></button>
 </div>
 {% endfor %} {% endblock %} {% block content %}
-<div
-  class="container-sm position-absolute translate-middle bottom- 50 top-50 start-50"
-  style="height: 200px; width: 700px"
->
+<div class="container-sm" style="height: 200px; width: 700px">
   <div class="row">
-    <div class="col-sm">
+    <div class="col-5">
       <img class="img-fluid img-thumbnail rounded" src="{{ user.image_url }}" />
     </div>
-    <div class="col-lg">
-      <h1>{{ user.get_full_name }}</h1>
-      <div>@{{ user.user_name }}</div>
-      <form>
-        <button
-          class="btn btn-sm btn-warning"
-          formaction="/users/{{ user.id }}/edit"
-          formmethod="GET"
-        >
-          EDIT
-        </button>
-        <button
-          class="btn btn-sm btn-danger"
-          formaction="/users/{{ user.id }}/delete"
-          formmethod="POST"
-        >
-          DELETE
-        </button>
-      </form>
-      <div>
-        <div>Latest posts</div>
-        {% if not user.posts %}
-        <div>No posts!</div>
-        {% elif user.posts %} {% for post in recent_posts %}
-        <div>
-          <a href="/users/{{ user.id }}/posts/{{ post.id }}"
-            >{{ post.title }}</a
-          >
-          <div>{{ post.friendly_date }}</div>
-        </div>
-        {% endfor %} {% endif %}
+    <div class="col-lg bg-light">
+      <div class="row">
+        <h1 class="mb-0">{{ user.get_full_name }}</h1>
       </div>
+      <div class="row">
+        <div>@{{ user.user_name }}</div>
+      </div>
+      <div class="row row-cols-auto mb-2">
+        <div class="col">
+          <a class="btn btn-sm btn-warning" href="/users/{{ user.id }}/edit">
+            EDIT
+          </a>
+        </div>
+        <div class="col">
+          <form>
+            <button
+              class="btn btn-sm btn-danger"
+              formaction="/users/{{ user.id }}/delete"
+              formmethod="POST"
+            >
+              DELETE
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+          <a
+            href="/users/{{ user.id }}/posts/new"
+            class="btn btn-lg btn-primary"
+          >
+            Create a Post
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <a href="/users/{{ user.id }}/posts" class="btn btn-sm btn-success">
+            Posts
+            <span class="badge text-bg-light">{{ user.posts|length }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row mt-1">
+    <div class="row"><h3>Latest posts</h3></div>
+    <div class="row bg-light pt-3 pb-3 rounded">
+      {% if not user.posts %}
+      <div class="row"><h5 class="text-center">No posts!</h5></div>
+      {% elif user.posts %} {% for post in recent_posts %}
+      <div>
+        <a href="/users/{{ user.id }}/posts/{{ post.id }}">{{ post.title }}</a>
+        <div>{{ post.friendly_date }}</div>
+      </div>
+      {% endfor %}
       <div>
         <a href="/users/{{ user.id }}/posts" class="btn btn-sm btn-success"
           >View All</a
         >
-        <a href="/users/{{ user.id }}/posts/new" class="btn btn-sm btn-primary">
-          Add a Post
-        </a>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>

@@ -1,36 +1,40 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container-sm">
-  <div class="row">Make a new post:</div>
-  <div class="row">
-    <form method="post">
-      <div class="form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="floatingInput"
-          placeholder="Title..."
-          name="title"
-          required
-          style="width: 400px"
-        />
-        <label for="floatingInput">Post title</label>
+  <div class="row mb-3"><h1 class="text-center">Make a new post:</h1></div>
+  <hr class="mb-0" />
+  <div class="container bg-light">
+    <div class="container" style="width: 600px">
+      <div class="row pt-3 pb-3">
+        <form method="post">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              placeholder="Title..."
+              name="title"
+              required
+            />
+            <label for="floatingInput">Post title</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea
+              id="content"
+              class="form-control"
+              name="content"
+              style="height: 200px"
+              placeholder="Write a post..."
+              required
+            ></textarea>
+            <label for="content">Write a post...</label>
+          </div>
+          <a class="btn btn-lg btn-secondary" href="/users/{{ user_id }}">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-lg btn-primary">Post</button>
+        </form>
       </div>
-      <div class="form-floating">
-        <textarea
-          id="content"
-          class="form-control"
-          name="content"
-          style="width: 600px; height: 100px"
-          placeholder="Write a post..."
-          required
-        ></textarea>
-        <label for="content">Write a post...</label>
-      </div>
-      <a class="btn btn-lg btn-secondary" href="/users/{{ user_id }}">
-        Cancel
-      </a>
-      <button type="submit" class="btn btn-lg btn-primary">Post</button>
-    </form>
+    </div>
   </div>
 </div>
 {% endblock %}

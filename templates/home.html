@@ -10,27 +10,40 @@ get_flashed_messages() %}
 </div>
 {% endfor %} {% endblock %} {% block content %}
 <h1 class="display-1 text-center">blogly.</h1>
-<div class="container-sm m-auto w-50">
-  <div class="row">Recent posts</div>
-  {% for post in posts %}
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">
-            posted by {{ post.user.get_name }} on {{ post.friendly_date }}
-          </h6>
-          <p class="card-text text-truncate">{{ post.content }}</p>
-          <a
-            href="/users/{{ post.user.id }}/posts/{{ post.id }}"
-            class="card-link"
-            >View full post</a
-          >
+{% if posts %}
+<div class="container-sm m-auto">
+  <div class="row"><h3>Recent posts:</h3></div>
+  <hr class="mb-0" />
+  <div class="container bg-light pb-3 rounded">
+    <div class="container-sm pt-2" style="width: 600px">
+      {% for post in posts %}
+      <div class="row mb-2">
+        <div class="col">
+          <div class="card">
+            <div class="card-body pb-1 pt-1 bg-white">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <h6 class="card-subtitle mb-0 text-body-secondary">
+                posted by
+                <a
+                  href="/users/{{ post.user.id }}"
+                  class="link-underline-opacity-0 link-secondary"
+                  >{{ post.user.get_name }}</a
+                >
+                on {{ post.friendly_date }}
+              </h6>
+              <hr class="mt-0 mb-3" />
+              <p class="card-text text-truncate">{{ post.content }}</p>
+              <a
+                href="/users/{{ post.user.id }}/posts/{{ post.id }}"
+                class="card-link link-secondary"
+                >View full post</a
+              >
+            </div>
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
-  {% endfor %}
 </div>
-{% endblock %}
+{% endif %} {% endblock %}

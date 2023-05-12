@@ -1,28 +1,48 @@
 {% extends 'base.html' %} {% block content %}
-<div class="form-container">
-  <div class="row">Edit post</div>
-  <div class="row">
-    <form method="post">
-      <label for="title">Title:</label>
-      <input
-        type="text"
-        name="title"
-        placeholder="Title..."
-        value="{{ post.title }}"
-        required
-      />
-      <textarea id="content" name="content" required>
+<div class="container-sm">
+  <div class="row mb-3"><h1 class="text-center">Edit post:</h1></div>
+  <hr class="mb-0" />
+  <div class="container bg-light">
+    <div class="container" style="width: 600px">
+      <div class="row pt-3 pb-3">
+        <form method="post">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              placeholder="Title..."
+              name="title"
+              required
+              value="{{ post.title }}"
+            />
+            <label for="floatingInput">Post title</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea
+              id="content"
+              class="form-control"
+              name="content"
+              style="height: 200px"
+              placeholder="Write a post..."
+              required
+            >
 {{ post.content }}</textarea
-      >
-      <button
-        class="btn btn-sm btn-secondary"
-        formaction="/users/{{ post.user_id }}/posts/{{ post.id }}"
-        formmethod="GET"
-      >
-        Cancel
-      </button>
-      <button class="btn btn-sm btn-primary">Save Changes</button>
-    </form>
+            >
+            <label for="content">Write a post...</label>
+          </div>
+          <a
+            class="btn btn-lg btn-secondary"
+            href="/users/{{ post.user.id }}/posts/{{ post.id }}"
+          >
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-lg btn-primary">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
