@@ -35,7 +35,7 @@ def home_page():
 def show_users():
     """show all users"""
 
-    users = User.query.all()
+    users = User.query.order_by(User.last_name).all()
 
     if len(users) == 0:
         flash("No users to show!")
