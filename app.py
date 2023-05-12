@@ -228,11 +228,12 @@ def delete_post(user_id, post_id):
 
 @app.route("/users/<int:user_id>/posts")
 def show_user_posts(user_id):
+    """show all posts from a user"""
     user = User.query.get_or_404(user_id)
 
     if len(user.posts) == 0:
         flash("No posts to show!")
-        return redirect("/users")
+        return redirect(f"/users/{user_id}")
 
     return render_template("posts.html", user=user)
 
