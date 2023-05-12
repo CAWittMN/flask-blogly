@@ -10,18 +10,19 @@ get_flashed_messages() %}
   ></button>
 </div>
 {% endfor %} {% endblock %} {% block content %}
-
-<div class="card">
+<div class="row"></div>
+<div class="card m-auto w-50">
   <div class="card-header">
     <div class="container-sm">
       <div class="row">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
           <img src="{{ post.user.image_url }}" class="img-thumbnail" />
         </div>
         <div class="col">
           <div class="row">
             <a href="/users/{{ post.user_id }}">{{ post.user.get_name }}</a>
           </div>
+          <div class="row">@{{ post.user.user_name }}</div>
           <div class="row"><span>{{ post.friendly_date }}</span></div>
         </div>
       </div>

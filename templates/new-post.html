@@ -1,17 +1,34 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container">
+<div class="container-sm">
   <div class="row">Make a new post:</div>
   <div class="row">
     <form method="post">
-      <input type="text" name="title" placeholder="Title..." required />
-      <textarea id="content" name="content" required></textarea>
-      <button
-        class="btn btn-lg btn-secondary"
-        formaction="/users/{{ user_id }}"
-        formmethod="GET"
-      >
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Title..."
+          name="title"
+          required
+          style="width: 400px"
+        />
+        <label for="floatingInput">Post title</label>
+      </div>
+      <div class="form-floating">
+        <textarea
+          id="content"
+          class="form-control"
+          name="content"
+          style="width: 600px; height: 100px"
+          placeholder="Write a post..."
+          required
+        ></textarea>
+        <label for="content">Write a post...</label>
+      </div>
+      <a class="btn btn-lg btn-secondary" href="/users/{{ user_id }}">
         Cancel
-      </button>
+      </a>
       <button type="submit" class="btn btn-lg btn-primary">Post</button>
     </form>
   </div>
