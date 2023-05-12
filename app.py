@@ -87,7 +87,14 @@ def show_user(user_id):
     """show specific user"""
 
     user = User.query.get_or_404(user_id)
-    return render_template("user.html", user=user)
+    recent_posts = (
+        Post.query.filter(Post.user_id == user_id)
+        .order_by(Post.created_datetime.desc())
+        .limit(3)
+        .all()
+    )
+    print(len(recent_posts))
+    return render_template("user.html", user=user, recent_posts=recent_posts)
 
 
 @app.route("/users/<int:user_id>/edit", methods=["GET"])
@@ -228,3 +235,13 @@ def show_user_posts(user_id):
         return redirect("/users")
 
     return render_template("posts.html", user=user)
+
+
+@app.route("/all-posts")
+def show_all_posts():
+    posts = Post.query.order_by(Post.created_datetime.desc()).all()
+
+    if len(posts) == 0:
+        flash("No posts to show!")
+        return redirect("/")
+    return render_template("all-posts.html", posts=posts)
