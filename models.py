@@ -113,7 +113,7 @@ class Tag(db.Model):
 class Post_Tag(db.Model):
     """post and tag relationship model"""
 
-    __tablename__ = "post_tag"
+    __tablename__ = "posts_tags"
 
     post_id = db.Column(
         db.Integer, db.ForeignKey("posts.id"), primary_key=True, nullable=False
