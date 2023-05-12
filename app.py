@@ -272,3 +272,11 @@ def show_all_posts():
         flash("No posts to show!")
         return redirect("/")
     return render_template("all-posts.html", posts=posts)
+
+
+############################ Tag routes ###################
+
+
+@app.route("/posts/tags")
+def show_tags_search():
+    tags = Tag.query.order_by(Tag.tag_name).all()
