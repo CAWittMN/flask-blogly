@@ -1,8 +1,9 @@
 """Blogly application."""
 
-from flask import Flask, request, redirect, render_template, flash, session
+from flask import Flask, request, redirect, render_template, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from models import User, Post, Tag, db, connect_db
+from models import User, Post, Tag, db, connect_db, Post_Tag
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly"
@@ -185,18 +186,22 @@ def delete_user(user_id):
 @app.route("/users/<int:user_id>/posts/new", methods=["GET"])
 def new_post(user_id):
     """show new post form"""
-
-    return render_template("new-post.html", user_id=user_id)
+    tags = Tag.query.order_by(Tag.tag_name).all()
+    return render_template("new-post.html", user_id=user_id, tags=tags)
 
 
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
 def save_new_post(user_id):
     """handle saving post to database"""
+
     user = User.query.get_or_404(user_id)
+    tag_names = request.form.getlist("tags")
+    tags = Tag.query.filter(Tag.tag_name.in_(tag_names)).all()
     new_post = Post(
         title=request.form["title"],
         content=request.form["content"],
         user=user,
+        tags=tags,
     )
 
     db.session.add(new_post)
@@ -231,6 +236,9 @@ def save_post_changes(user_id, post_id):
 
     post.title = request.form["title"]
     post.content = request.form["content"]
+    tag_names = request.form.getlist("tags")
+    tags = Tag.query.filter(Tag.tag_name.in_(tag_names)).all()
+    post.tags = tags
 
     db.session.add(post)
     db.session.commit()
@@ -277,6 +285,26 @@ def show_all_posts():
 ############################ Tag routes ###################
 
 
-@app.route("/posts/tags")
+@app.route("/all-posts/tags")
 def show_tags_search():
+    tag_names = request.args.getlist("tags")
+    print(tag_names)
     tags = Tag.query.order_by(Tag.tag_name).all()
+    return render_template("tags.html", tags=tags)
+
+
+@app.route("/add-tag", methods=["POST"])
+def add_tag():
+    try:
+        tag_name = request.json["tag_name"]
+        new_tag = Tag(tag_name=tag_name)
+        db.session.add(new_tag)
+        db.session.commit()
+    except:
+        return jsonify(new_tag.id)
+    return jsonify(new_tag.id)
+
+
+@app.route("/all-posts/tags/search")
+def show_post_tag_results():
+    tag_names = request.form.list("tags")
