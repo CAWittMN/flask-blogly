@@ -104,6 +104,11 @@ class Tag(db.Model):
 
     __tablename__ = "tags"
 
+    def __repr__(self):
+        tag = self
+        return f"""tag id = {tag.id}
+        tag name = {tag.tag_name}"""
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tag_name = db.Column(db.Text, nullable=False, unique=True)
 
