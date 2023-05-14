@@ -51,6 +51,14 @@ get_flashed_messages() %}
         </form>
       </div>
     </div>
+    <div class="row row-cols-auto mt-2">
+      <div class="col">tags:</div>
+      {% if post.tags %} {% for tag in post.tags %}
+      <div class="col pe-0 ps-1 py-0">
+        <span class="badge rounded-pill bg-info">{{ tag.tag_name }}</span>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
   </div>
 </div>
 {% endblock %}

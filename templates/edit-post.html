@@ -3,44 +3,91 @@
   <div class="row mb-3"><h1 class="text-center">Edit post:</h1></div>
   <hr class="mb-0" />
   <div class="container bg-light">
-    <div class="container" style="width: 600px">
-      <div class="row pt-3 pb-3">
-        <form method="post">
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              placeholder="Title..."
-              name="title"
-              required
-              value="{{ post.title }}"
-            />
-            <label for="floatingInput">Post title</label>
-          </div>
-          <div class="form-floating mb-3">
-            <textarea
-              id="content"
-              class="form-control"
-              name="content"
-              style="height: 200px"
-              placeholder="Write a post..."
-              required
-            >
+    <div class="row">
+      <div class="col-1" id="blank"></div>
+      <div class="col-5 pt-3 pb-3" id="form">
+        <form id="post-form" method="post">
+          <div class="row">
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input
+                  value="{{ post.title }}"
+                  type="text"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="Title..."
+                  name="title"
+                  required
+                />
+                <label for="floatingInput">Post title</label>
+              </div>
+              <div class="form-floating mb-3">
+                <textarea
+                  id="content"
+                  class="form-control"
+                  name="content"
+                  style="height: 200px"
+                  placeholder="Write a post..."
+                  required
+                >
 {{ post.content }}</textarea
-            >
-            <label for="content">Write a post...</label>
+                >
+                <label for="content">Write a post...</label>
+              </div>
+            </div>
           </div>
-          <a
-            class="btn btn-lg btn-secondary"
-            href="/users/{{ post.user.id }}/posts/{{ post.id }}"
-          >
-            Cancel
-          </a>
-          <button type="submit" class="btn btn-lg btn-primary">
-            Save Changes
-          </button>
         </form>
+      </div>
+      <div class="col-5 pt-3" id="tags-col">
+        <div class="row" id="tag-input-row">
+          <div class="col"><h3>Tags:</h3></div>
+          <div class="col" id="form-col"></div>
+        </div>
+        <div class="row mt-3 row-cols-auto bg-white rounded p-2" id="tags-row">
+          {% for tag in post.tags %}
+          <div class="col mb-1 py-o pe-1 ps-0">
+            <input
+              value="{{ tag.tag_name }}"
+              type="checkbox"
+              class="btn-check"
+              id="tag_{{ tag.tag_name }}"
+              autocomplete="off"
+              name="tags"
+              form="post-form"
+              checked
+            />
+            <label
+              for="tag_{{ tag.tag_name }}"
+              class="btn pt-0 pb-0 pr-1 pl-1 btn-sm rounded-pill btn-outline-primary"
+              >{{ tag.tag_name }}</label
+            >
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3 w-100">
+      <div class="col-3"></div>
+      <div class="col-6 text-center">
+        <a
+          class="btn btn-lg w-100 btn-secondary"
+          href="/users/{{ post.user.id }}/posts/{{ post.id }}"
+        >
+          Cancel
+        </a>
+      </div>
+      <div class="col-3"></div>
+    </div>
+    <div class="row pb-3 w-100">
+      <div class="col-3"></div>
+      <div class="col-6 text-center">
+        <button
+          form="post-form"
+          type="submit"
+          class="w-100 btn btn-lg btn-primary"
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   </div>
