@@ -1,14 +1,34 @@
 class Tag {
   constructor() {
-    this.$tagContainer = $("#tag-container");
-    this.$tagForm = $("#tag-field");
-    this.$tagForm.on("submit", this.handleSubmit.bind(this));
+    this.$tagRow = $("#tag-row");
+    this.$tagForm = $("#tag-form");
+    this.$tagInput = $("#tag-input");
+
+    this.$tagForm.on("submit", this.handleTagSubmit.bind(this));
   }
 
-  handleSubmit(evt) {
+  handleTagSubmit(evt) {
     evt.preventDefault();
-    const newTagName = this.$tagForm.val();
-    $newTagPill = $("<input>");
-    $newTagPill.attr({ value: `${newTagName}` });
+    const tagName = this.$tagInput.val().toLowerCase();
+    const $newCol = $("<div>").attr({ class: "col" });
+    const $newTagBtn = $("<input>").attr({
+      value: `${tagName}`,
+      type: "checkbox",
+      class: "btn-check",
+      id: `tag-${tagName}`,
+      autocomplete: "off",
+      name: "tags",
+      checked: true,
+    });
+    const $newTagLbl = $("<label>")
+      .attr({
+        for: `tag-${tagName}`,
+        class: "btn btn-sm btn-outline-primary",
+      })
+      .text(`${tagName}`);
+    $newCol.append($newTagBtn, $newTagLbl);
+    this.$tagRow.append($newCol);
   }
 }
+
+tag = new Tag();
