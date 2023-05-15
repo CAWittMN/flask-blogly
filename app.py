@@ -288,7 +288,6 @@ def show_all_posts():
 @app.route("/all-posts/tags")
 def show_tags_search():
     tag_names = request.args.getlist("tags")
-    print(tag_names)
     tags = Tag.query.order_by(Tag.tag_name).all()
     return render_template("tags.html", tags=tags)
 
@@ -308,3 +307,4 @@ def add_tag():
 @app.route("/all-posts/tags/search")
 def show_post_tag_results():
     tag_names = request.form.list("tags")
+    session.query(Post).join(Tag)
