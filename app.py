@@ -9,13 +9,7 @@ app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = "postgresql://cawittmn:e1rdydPGpsTXZS5GWWwmhZOZ1Lr4c7u7@dpg-chs31nu4dadfn67sc9hg-a/cawittmn"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = "bloglysecretkey"
-app.config["SQLALCHEMY_RECORD_QUERIES"] = True
-app.debug = True
-
-debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
